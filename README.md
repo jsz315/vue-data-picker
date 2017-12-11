@@ -1,6 +1,7 @@
 # vue-data-picker
 
-> vue city and base picker
+>基于vue的picker组件，支持中国省市区联动选择
+演示地址：[http://jsz315.github.io/vue-data-picker/](http://jsz315.github.io/vue-data-picker/)
 
 ## Build Setup
 
