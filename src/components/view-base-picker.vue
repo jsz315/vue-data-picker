@@ -35,6 +35,7 @@ export default{
 		show(list){
 			this.visible = true;
 			var $this = this;
+			this.curData = list[0];
 			setTimeout(function () {
 				$this.opacity = 1;
 			}, 30);
@@ -97,6 +98,7 @@ export default{
 	left: 0;
 	top: 0;
 	color: #39f;
+	cursor: pointer;
 }
 .sure{
 	position: absolute;
@@ -106,6 +108,7 @@ export default{
 	right: 0;
 	top: 0;
 	color: #39f;
+	cursor: pointer;
 }
 .list{
 	display: flex;

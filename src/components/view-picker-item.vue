@@ -40,30 +40,41 @@ export default{
 			this.list = list;
 			this.position = this.max;
 			var pot = 0;
-			//var max = this.height * Math.floor(this.display / 2);
-			//var min = max - (this.list.length - 1) * this.height;
+			var isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i);
 			var $this = this;
+			var isDrag = false;
 
 			if(!this.init){
-				this.init = true;	
-				this.$refs.data.addEventListener("touchstart", touchstart);
-				this.$refs.data.addEventListener("touchmove", touchmove);
-				this.$refs.data.addEventListener("touchend", touchend);
+				this.init = true;
+				if(isMobile){
+					this.$refs.data.addEventListener("touchstart", dragstart);
+					this.$refs.data.addEventListener("touchmove", dragmove);
+					this.$refs.data.addEventListener("touchend", dragend);
+				}
+				else{
+					this.$refs.data.addEventListener("mousedown", dragstart);
+					this.$refs.data.addEventListener("mousemove", dragmove);
+					this.$refs.data.addEventListener("mouseup", dragend);
+				}
+
 			}
 
-			function touchstart(e){
-				pot = e.changedTouches[0].clientY;
+			function dragstart(e){
+				isDrag = true;
+				pot = isMobile ? e.changedTouches[0].clientY : e.clientY;
 			}
 
-			function touchmove(e){
-				var move = e.changedTouches[0].clientY - pot;
+			function dragmove(e){
+				if(!isDrag){
+					return;
+				}
+				var newPot = isMobile ? e.changedTouches[0].clientY : e.clientY;
+				var move = newPot - pot;
 				$this.position += move * 1;
-				pot = e.changedTouches[0].clientY;
+				pot = newPot;
 			}
 
-			function touchend(e){
-				//document.removeEventListener("touchmove", touchmove);
-				//document.removeEventListener("touchend", touchend);
+			function dragend(e){
 				$this.position = Math.floor($this.position / $this.height) * $this.height;
 				if($this.position < $this.min){
 					$this.position = $this.min;
@@ -74,6 +85,7 @@ export default{
 				var n = $this.position / $this.height;
 				n = Math.floor($this.display / 2) - n;
 				$this.$emit("change", $this.list[n]);
+				isDrag = false;
 			}
 		}
 	},
@@ -88,6 +100,8 @@ export default{
 	position: relative;
 	width: 100%;
 	background: #f9f9f9;
+	cursor: pointer;
+	user-select: none;
 }
 .data{
 	position: relative;

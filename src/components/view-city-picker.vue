@@ -135,6 +135,7 @@ export default{
 	left: 0;
 	top: 0;
 	color: #39f;
+	cursor: pointer;
 }
 .sure{
 	position: absolute;
@@ -144,6 +145,7 @@ export default{
 	right: 0;
 	top: 0;
 	color: #39f;
+	cursor: pointer;
 }
 .list{
 	display: flex;
